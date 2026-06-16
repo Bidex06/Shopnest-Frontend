@@ -3,6 +3,19 @@ import { Link, useNavigate } from 'react-router-dom';
 import { productsApi, categoriesApi } from '../services/api';
 import ProductCard from '../components/ProductCard';
 
+const mobileStyles = `
+  @media (max-width: 768px) {
+    .hero-inner { grid-template-columns: 1fr !important; gap: 32px !important; }
+    .hero-right { display: none !important; }
+    .banner-inner { grid-template-columns: 1fr !important; gap: 32px !important; }
+    .hero-section { padding: 48px 0 40px !important; min-height: auto !important; }
+    .hero-title { font-size: 36px !important; }
+    .hero-buttons { flex-direction: column !important; }
+    .hero-buttons a { width: 100% !important; text-align: center !important; }
+    .stats-row { gap: 20px !important; }
+  }
+`;
+
 export default function HomePage() {
   const [categories, setCategories] = useState([]);
   const [featured, setFeatured] = useState([]);
@@ -21,24 +34,26 @@ export default function HomePage() {
 
   return (
     <div>
+      <style>{mobileStyles}</style>
+
       {/* ── HERO ── */}
-      <section style={S.hero}>
-        <div className="container" style={S.heroInner}>
+      <section className="hero-section" style={S.hero}>
+        <div className="container hero-inner" style={S.heroInner}>
           <div style={S.heroLeft}>
             <p style={S.heroLabel}>Guided Discovery</p>
-            <h1 style={S.heroTitle}>
+            <h1 className="hero-title" style={S.heroTitle}>
               Discover Your<br />
               Personal <em style={{ fontStyle: 'italic', fontWeight: 300 }}>Curation.</em>
             </h1>
             <p style={S.heroSub}>
               Take our quick quiz to find perfectly matched shoes, oral care, fragrances, and clothing tailored to your lifestyle.
             </p>
-            <div style={{ display: 'flex', gap: 14, marginTop: 36, flexWrap: 'wrap' }}>
+            <div className="hero-buttons" style={{ display: 'flex', gap: 14, marginTop: 36, flexWrap: 'wrap' }}>
               <Link to="/shop" className="btn btn-accent btn-lg">Shop All Products</Link>
               <Link to="/shop?category=4" className="btn btn-outline btn-lg">View Clothing</Link>
             </div>
             {/* Stats */}
-            <div style={S.stats}>
+            <div className="stats-row" style={S.stats}>
               {[['500+', 'Products'], ['4.8★', 'Rating'], ['Free', 'Delivery $50+']].map(([val, label]) => (
                 <div key={label} style={S.stat}>
                   <span style={S.statVal}>{val}</span>
@@ -47,7 +62,7 @@ export default function HomePage() {
               ))}
             </div>
           </div>
-          <div style={S.heroRight}>
+          <div className="hero-right" style={S.heroRight}>
             <div style={S.heroImgGrid}>
               <div style={S.heroImgMain}>
                 <img src="https://images.unsplash.com/photo-1523381210434-271e8be1f52b?w=500" alt="clothing"
@@ -113,7 +128,7 @@ export default function HomePage() {
 
       {/* ── BANNER ── */}
       <section style={S.banner}>
-        <div className="container" style={S.bannerInner}>
+        <div className="container banner-inner" style={S.bannerInner}>
           <div style={S.bannerLeft}>
             <img src="https://images.unsplash.com/photo-1559757148-5c350d0d3c56?w=500" alt="oral care"
               style={{ width: '100%', height: 320, objectFit: 'cover', borderRadius: 4 }} />

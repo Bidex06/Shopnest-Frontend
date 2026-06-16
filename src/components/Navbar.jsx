@@ -3,6 +3,15 @@ import { useAuth } from '../context/AuthContext';
 import { useCart } from '../context/CartContext';
 import { useState } from 'react';
 
+const navMobileStyles = `
+  @media (max-width: 768px) {
+    .nav-links { display: none !important; }
+    .nav-login-signup { display: none !important; }
+    .nav-hamburger { display: flex !important; }
+    .nav-inner { padding: 0 16px !important; }
+  }
+`;
+
 export default function Navbar() {
   const { user, logout } = useAuth();
   const { cartCount } = useCart();
@@ -21,6 +30,7 @@ export default function Navbar() {
 
   return (
     <>
+      <style>{navMobileStyles}</style>
       <nav style={S.nav}>
         {/* Top bar */}
         <div style={S.topBar}>
@@ -29,9 +39,9 @@ export default function Navbar() {
 
         {/* Main navbar */}
         <div style={S.main}>
-          <div className="container" style={S.inner}>
+          <div className="container nav-inner" style={S.inner}>
             {/* Left links */}
-            <div style={S.navLinks}>
+            <div className="nav-links" style={S.navLinks}>
               <Link to="/shop" style={{ ...S.link, ...(isActive('/shop') ? S.linkActive : {}) }}>Shop</Link>
               <Link to="/shop?sortBy=created_at&sortDesc=true" style={S.link}>New Arrivals</Link>
               <Link to="/shop?category=4" style={S.link}>Clothing</Link>
@@ -61,14 +71,14 @@ export default function Navbar() {
                   <button onClick={handleLogout} style={{ ...S.link, background: 'none', border: 'none', fontSize: 12 }}>Logout</button>
                 </>
               ) : (
-                <>
+                <div className="nav-login-signup" style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
                   <Link to="/login" style={S.link}>Login</Link>
                   <Link to="/register" className="btn btn-primary btn-sm">Sign Up</Link>
-                </>
+                </div>
               )}
 
               {/* Mobile hamburger */}
-              <button onClick={() => setMenuOpen(!menuOpen)} style={S.hamburger}>
+              <button className="nav-hamburger" onClick={() => setMenuOpen(!menuOpen)} style={S.hamburger}>
                 {menuOpen ? '✕' : '☰'}
               </button>
             </div>
